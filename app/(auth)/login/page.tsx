@@ -19,10 +19,20 @@ export default function LoginPage() {
     setMessage(null)
 
     try {
+      // Use the configured URL only if it's not localhost OR if we're currently on localhost
+      // This prevents production sites from redirecting to localhost
+      const configuredUrl = process.env.NEXT_PUBLIC_APP_URL
+      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      const isConfiguredLocalhost = configuredUrl?.includes('localhost') || configuredUrl?.includes('127.0.0.1')
+
+      const redirectUrl = (configuredUrl && (isLocalhost || !isConfiguredLocalhost))
+        ? configuredUrl
+        : window.location.origin
+
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: `${redirectUrl}/auth/callback`,
         },
       })
 

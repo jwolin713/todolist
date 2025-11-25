@@ -30,7 +30,7 @@ export function useConversationHistory() {
 
       // Group messages by conversation_date
       const grouped = (data || []).reduce((acc, message) => {
-        const existingGroup = acc.find((g) => g.date === message.conversation_date)
+        const existingGroup = acc.find((g: GroupedMessages) => g.date === message.conversation_date)
         if (existingGroup) {
           existingGroup.messages.push(message)
         } else {

@@ -43,7 +43,7 @@ export function useConversationHistory() {
       }, [] as GroupedMessages[])
 
       // Sort messages within each group by created_at (ascending for chronological order)
-      grouped.forEach((group) => {
+      grouped.forEach((group: GroupedMessages) => {
         group.messages.sort(
           (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
         )

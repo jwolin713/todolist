@@ -27,20 +27,20 @@ export function OfflineIndicator() {
 
   return (
     <div
-      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2 rounded-lg shadow-lg transition-all duration-300 ${
+      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2.5 px-4 py-2.5 rounded-xl shadow-soft-lg transition-all duration-300 animate-fade-in-up ${
         isOnline
-          ? "bg-green-500/90 text-white"
-          : "bg-amber-500/90 text-white"
+          ? "bg-chart-2 text-white"
+          : "bg-chart-4 text-foreground"
       }`}
     >
       {isOnline ? (
         <>
-          <Wifi className="h-4 w-4" />
+          <Wifi className="h-4 w-4" strokeWidth={2} />
           <span className="text-sm font-medium">Back online</span>
         </>
       ) : (
         <>
-          <WifiOff className="h-4 w-4" />
+          <WifiOff className="h-4 w-4" strokeWidth={2} />
           <span className="text-sm font-medium">You're offline</span>
         </>
       )}

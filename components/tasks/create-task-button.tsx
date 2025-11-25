@@ -18,10 +18,10 @@ export function CreateTaskButton({ onCreate, className }: CreateTaskButtonProps)
     <>
       <Button
         onClick={() => setDialogOpen(true)}
-        className={className || "fixed bottom-20 lg:bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-indigo-600 hover:bg-indigo-700 text-white z-40"}
+        className={className || "fixed bottom-20 lg:bottom-6 right-6 h-14 w-14 rounded-2xl shadow-soft-lg bg-secondary hover:bg-secondary/90 text-secondary-foreground z-40 transition-all duration-200 hover:scale-105 active:scale-95"}
         size="icon"
       >
-        <Plus className="h-6 w-6" />
+        <Plus className="h-6 w-6" strokeWidth={1.75} />
       </Button>
 
       <TaskCreateDialog

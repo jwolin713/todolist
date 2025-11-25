@@ -10,7 +10,7 @@ export default function DashboardLayout({
 }) {
   return (
     <KeyboardShortcutsProvider>
-      <div className="min-h-screen bg-slate-950">
+      <div className="min-h-screen bg-background">
         {/* Offline Indicator */}
         <OfflineIndicator />
 
@@ -18,7 +18,7 @@ export default function DashboardLayout({
         <Sidebar />
 
         {/* Main content */}
-        <div className="lg:pl-64 flex flex-col min-h-screen">
+        <div className="lg:pl-72 flex flex-col min-h-screen">
           <main className="flex-1 pb-20 lg:pb-0">
             {children}
           </main>

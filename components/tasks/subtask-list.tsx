@@ -54,13 +54,13 @@ export function SubtaskList({
       {/* Progress indicator */}
       {totalCount > 0 && (
         <div className="flex items-center gap-3">
-          <div className="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div className="flex-1 h-1.5 bg-border rounded-full overflow-hidden">
             <div
-              className="h-full bg-indigo-600 transition-all duration-300"
+              className="h-full bg-primary transition-all duration-300"
               style={{ width: `${(completedCount / totalCount) * 100}%` }}
             />
           </div>
-          <span className="text-sm text-slate-400 whitespace-nowrap">
+          <span className="text-xs text-muted-foreground whitespace-nowrap">
             {completedCount} of {totalCount}
           </span>
         </div>
@@ -68,31 +68,31 @@ export function SubtaskList({
 
       {/* Subtask list */}
       {loading ? (
-        <div className="text-sm text-slate-400 py-2">Loading subtasks...</div>
+        <div className="text-sm text-muted-foreground py-2">Loading subtasks...</div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-1">
           {subtasks.map((subtask) => (
             <div
               key={subtask.id}
               className={cn(
-                "group flex items-center gap-3 p-2 rounded-lg hover:bg-slate-800/50 transition-colors",
+                "group flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors",
                 subtask.status === "completed" && "opacity-60"
               )}
             >
-              <GripVertical className="h-4 w-4 text-slate-600 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab" />
+              <GripVertical className="h-4 w-4 text-muted-foreground/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab" strokeWidth={1.75} />
 
               <Checkbox
                 checked={subtask.status === "completed"}
                 onCheckedChange={() => onToggleComplete(subtask.id)}
-                className="border-slate-600"
+                className="border-border data-[state=checked]:bg-primary data-[state=checked]:border-primary"
               />
 
               <span
                 className={cn(
                   "flex-1 text-sm",
                   subtask.status === "completed"
-                    ? "line-through text-slate-500"
-                    : "text-slate-200"
+                    ? "line-through text-muted-foreground"
+                    : "text-foreground"
                 )}
               >
                 {subtask.title}
@@ -101,16 +101,16 @@ export function SubtaskList({
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-red-400"
+                className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-destructive rounded-lg"
                 onClick={() => onDeleteSubtask(subtask.id)}
               >
-                <Trash2 className="h-4 w-4" />
+                <Trash2 className="h-4 w-4" strokeWidth={1.75} />
               </Button>
             </div>
           ))}
 
           {subtasks.length === 0 && (
-            <div className="text-sm text-slate-500 py-2 text-center">
+            <div className="text-sm text-muted-foreground py-2 text-center">
               No subtasks yet. Add one below!
             </div>
           )}
@@ -125,15 +125,15 @@ export function SubtaskList({
           onKeyDown={handleKeyDown}
           placeholder="Add a subtask..."
           disabled={isCreating}
-          className="flex-1 bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
+          className="flex-1 bg-background border-border text-foreground placeholder:text-muted-foreground"
         />
         <Button
           onClick={handleCreateSubtask}
           disabled={!newSubtaskTitle.trim() || isCreating}
           size="icon"
-          className="bg-indigo-600 hover:bg-indigo-700"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground"
         >
-          <Plus className="h-4 w-4" />
+          <Plus className="h-4 w-4" strokeWidth={2} />
         </Button>
       </div>
     </div>

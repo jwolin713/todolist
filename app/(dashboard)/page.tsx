@@ -69,19 +69,20 @@ export default function TodayPage() {
   return (
     <>
       <Header title="Today" />
-      <div className="p-6">
+      <div className="p-4 sm:p-6 lg:p-8">
         <div className="max-w-4xl mx-auto">
-          <div className="mb-6">
+          {/* Page header */}
+          <div className="mb-8">
             <div className="flex items-baseline gap-3">
-              <h2 className="text-2xl font-bold text-white">Today</h2>
+              <h2 className="text-3xl font-serif font-medium text-foreground tracking-tight">Today</h2>
               {count > 0 && (
-                <span className="text-sm text-slate-400">
+                <span className="text-sm text-muted-foreground">
                   {count} {count === 1 ? "task" : "tasks"}
-                  {hasOverdue && <span className="text-red-400 ml-1">• Overdue items</span>}
+                  {hasOverdue && <span className="text-destructive ml-1">• Overdue</span>}
                 </span>
               )}
             </div>
-            <p className="text-slate-400 mt-1">
+            <p className="text-muted-foreground mt-1">
               {new Date().toLocaleDateString("en-US", {
                 weekday: "long",
                 year: "numeric",
@@ -92,8 +93,11 @@ export default function TodayPage() {
           </div>
 
           {loading ? (
-            <div className="bg-slate-900 rounded-lg p-8 text-center border border-slate-800">
-              <p className="text-slate-400">Loading tasks...</p>
+            <div className="bg-card rounded-2xl p-12 text-center border border-border">
+              <div className="inline-flex items-center gap-2 text-muted-foreground">
+                <div className="w-4 h-4 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
+                <span>Loading tasks...</span>
+              </div>
             </div>
           ) : (
             <TodayView

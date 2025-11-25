@@ -4,7 +4,7 @@ import { useState, useMemo } from "react"
 import { Task } from "@/lib/types/database"
 import { getContextualTasks } from "@/lib/scoring/task-scorer"
 import { TaskList } from "./task-list"
-import { Zap, Clock } from "lucide-react"
+import { Zap, Clock, Sparkles } from "lucide-react"
 import {
   Select,
   SelectContent,
@@ -61,33 +61,37 @@ export function SmartSuggestions({
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Input Section */}
-      <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
-        <div className="flex items-center gap-2 mb-4">
-          <Zap className="h-5 w-5 text-emerald-400" />
-          <h3 className="text-lg font-semibold text-white">
-            Get Smart Suggestions
-          </h3>
+      <div className="bg-card rounded-2xl p-6 border border-border shadow-soft">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-chart-2/10 flex items-center justify-center">
+            <Sparkles className="h-5 w-5 text-chart-2" strokeWidth={1.75} />
+          </div>
+          <div>
+            <h3 className="text-lg font-serif font-medium text-foreground">
+              Get Smart Suggestions
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              Tell us your constraints for personalized recommendations
+            </p>
+          </div>
         </div>
-        <p className="text-sm text-slate-400 mb-4">
-          Tell us how much time and energy you have, and we'll suggest the best tasks to work on.
-        </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
           {/* Time Selection */}
           <div className="space-y-2">
-            <label className="text-sm text-slate-300 flex items-center gap-2">
-              <Clock className="h-4 w-4" />
+            <label className="text-sm font-medium text-foreground flex items-center gap-2">
+              <Clock className="h-4 w-4 text-muted-foreground" strokeWidth={1.75} />
               Available Time
             </label>
             <Select value={availableTime} onValueChange={setAvailableTime}>
-              <SelectTrigger className="bg-slate-800 border-slate-700 text-white">
+              <SelectTrigger className="bg-background border-border text-foreground">
                 <SelectValue placeholder="Select time" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-card border-border">
                 {TIME_OPTIONS.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
+                  <SelectItem key={option.value} value={option.value} className="text-foreground">
                     {option.label}
                   </SelectItem>
                 ))}
@@ -97,17 +101,17 @@ export function SmartSuggestions({
 
           {/* Energy Selection */}
           <div className="space-y-2">
-            <label className="text-sm text-slate-300 flex items-center gap-2">
-              <Zap className="h-4 w-4" />
+            <label className="text-sm font-medium text-foreground flex items-center gap-2">
+              <Zap className="h-4 w-4 text-muted-foreground" strokeWidth={1.75} />
               Current Energy
             </label>
             <Select value={currentEnergy} onValueChange={(value) => setCurrentEnergy(value as "high" | "medium" | "low")}>
-              <SelectTrigger className="bg-slate-800 border-slate-700 text-white">
+              <SelectTrigger className="bg-background border-border text-foreground">
                 <SelectValue placeholder="Select energy level" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-card border-border">
                 {ENERGY_OPTIONS.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
+                  <SelectItem key={option.value} value={option.value} className="text-foreground">
                     {option.label}
                   </SelectItem>
                 ))}
@@ -116,18 +120,19 @@ export function SmartSuggestions({
           </div>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <Button
             onClick={handleGetSuggestions}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground"
           >
+            <Sparkles className="h-4 w-4 mr-2" strokeWidth={1.75} />
             Get Suggestions
           </Button>
           {showSuggestions && (
             <Button
               onClick={handleReset}
               variant="outline"
-              className="border-slate-700 text-slate-300 hover:bg-slate-800"
+              className="border-border text-foreground hover:bg-muted"
             >
               Reset
             </Button>
@@ -137,16 +142,16 @@ export function SmartSuggestions({
 
       {/* Results Section */}
       {showSuggestions && (
-        <div className="space-y-3">
+        <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h4 className="text-sm font-medium text-slate-300">
+            <h4 className="text-sm font-medium text-foreground">
               {suggestedTasks.length > 0
                 ? `${suggestedTasks.length} task${suggestedTasks.length === 1 ? '' : 's'} match your criteria`
                 : 'No tasks match your criteria'
               }
             </h4>
             {suggestedTasks.length > 0 && (
-              <span className="text-xs text-slate-500">
+              <span className="text-xs text-muted-foreground">
                 Sorted by priority and fit
               </span>
             )}
@@ -160,8 +165,11 @@ export function SmartSuggestions({
               emptyMessage=""
             />
           ) : (
-            <div className="bg-slate-900 rounded-lg p-6 text-center border border-slate-800">
-              <p className="text-slate-400">
+            <div className="bg-card rounded-2xl p-8 text-center border border-border">
+              <div className="w-12 h-12 rounded-xl bg-muted/50 flex items-center justify-center mx-auto mb-3">
+                <Sparkles className="h-6 w-6 text-muted-foreground" strokeWidth={1.5} />
+              </div>
+              <p className="text-muted-foreground">
                 No tasks found that fit your current time and energy.
                 Try adjusting your criteria or create new tasks!
               </p>

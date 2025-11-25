@@ -2,7 +2,7 @@
 
 import { ParsedTask } from "@/lib/ai/task-parser"
 import { cn } from "@/lib/utils"
-import { Sparkles, User, HelpCircle } from "lucide-react"
+import { Feather, User, HelpCircle } from "lucide-react"
 import { TaskPreviewCard } from "./task-preview-card"
 
 interface ChatMessageProps {
@@ -25,20 +25,20 @@ export function ChatMessage({
   const isUser = role === "user"
 
   return (
-    <div className={cn("flex gap-3 mb-4", isUser ? "justify-end" : "justify-start")}>
+    <div className={cn("flex gap-3 mb-5", isUser ? "justify-end" : "justify-start")}>
       {!isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center">
-          <Sparkles className="h-4 w-4 text-white" />
+        <div className="flex-shrink-0 w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center">
+          <Feather className="h-4 w-4 text-primary" />
         </div>
       )}
 
-      <div className={cn("flex flex-col max-w-[80%]", isUser && "items-end")}>
+      <div className={cn("flex flex-col max-w-[85%]", isUser && "items-end")}>
         <div
           className={cn(
             "rounded-2xl px-4 py-3 break-words",
             isUser
-              ? "bg-indigo-600 text-white rounded-br-sm"
-              : "bg-slate-800 text-slate-100 border border-slate-700 rounded-bl-sm"
+              ? "bg-primary text-primary-foreground rounded-br-sm"
+              : "bg-card text-foreground border border-border rounded-bl-sm shadow-soft"
           )}
         >
           <p className="text-sm leading-relaxed whitespace-pre-wrap">{content}</p>
@@ -46,17 +46,17 @@ export function ChatMessage({
 
         {/* Clarifying Questions */}
         {needsClarification && clarifyingQuestions && clarifyingQuestions.length > 0 && (
-          <div className="mt-2 bg-amber-500/10 border border-amber-500/20 rounded-lg p-3 w-full">
-            <div className="flex items-center gap-2 mb-2">
-              <HelpCircle className="h-4 w-4 text-amber-400" />
-              <span className="text-xs font-medium text-amber-400 uppercase tracking-wide">
+          <div className="mt-3 bg-chart-4/10 border border-chart-4/20 rounded-xl p-4 w-full">
+            <div className="flex items-center gap-2 mb-2.5">
+              <HelpCircle className="h-4 w-4 text-chart-4" />
+              <span className="text-[11px] font-semibold text-chart-4 uppercase tracking-widest">
                 Need More Info
               </span>
             </div>
-            <ul className="space-y-1">
+            <ul className="space-y-1.5">
               {clarifyingQuestions.map((question, index) => (
-                <li key={index} className="text-sm text-slate-300 flex gap-2">
-                  <span className="text-amber-400">•</span>
+                <li key={index} className="text-sm text-foreground flex gap-2">
+                  <span className="text-chart-4 mt-0.5">•</span>
                   {question}
                 </li>
               ))}
@@ -66,7 +66,7 @@ export function ChatMessage({
 
         {/* Task Previews */}
         {parsedTasks && parsedTasks.length > 0 && !needsClarification && (
-          <div className="mt-2 space-y-2 w-full">
+          <div className="mt-3 space-y-2 w-full">
             {parsedTasks.map((task, index) => (
               <TaskPreviewCard key={index} task={task} />
             ))}
@@ -74,13 +74,13 @@ export function ChatMessage({
         )}
 
         {timestamp && (
-          <span className="text-xs text-slate-500 mt-1 px-1">{timestamp}</span>
+          <span className="text-[11px] text-muted-foreground mt-1.5 px-1">{timestamp}</span>
         )}
       </div>
 
       {isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center">
-          <User className="h-4 w-4 text-slate-300" />
+        <div className="flex-shrink-0 w-8 h-8 rounded-xl bg-secondary flex items-center justify-center">
+          <User className="h-4 w-4 text-secondary-foreground" />
         </div>
       )}
     </div>

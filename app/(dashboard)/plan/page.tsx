@@ -58,18 +58,21 @@ export default function PlanPage() {
   return (
     <>
       <Header title="Plan" />
-      <div className="p-6">
+      <div className="p-4 sm:p-6 lg:p-8">
         <div className="max-w-4xl mx-auto">
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-white">Smart Task Planning</h2>
-            <p className="text-slate-400 mt-1">
+          <div className="mb-8">
+            <h2 className="text-3xl font-serif font-medium text-foreground tracking-tight">Smart Planning</h2>
+            <p className="text-muted-foreground mt-1">
               Get personalized task suggestions based on your available time and energy
             </p>
           </div>
 
           {loading ? (
-            <div className="bg-slate-900 rounded-lg p-8 text-center border border-slate-800">
-              <p className="text-slate-400">Loading tasks...</p>
+            <div className="bg-card rounded-2xl p-12 text-center border border-border">
+              <div className="inline-flex items-center gap-2 text-muted-foreground">
+                <div className="w-4 h-4 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
+                <span>Loading tasks...</span>
+              </div>
             </div>
           ) : (
             <SmartSuggestions

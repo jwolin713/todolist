@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Plus } from "lucide-react"
 
 interface TaskCreateDialogProps {
   open: boolean
@@ -130,24 +131,24 @@ export function TaskCreateDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-slate-900 border-slate-800 max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-white">Create New Task</DialogTitle>
-          <DialogDescription className="text-slate-400">
+      <DialogContent className="bg-background border-border max-w-2xl max-h-[90vh] overflow-y-auto shadow-soft-lg">
+        <DialogHeader className="pb-4 border-b border-border">
+          <DialogTitle className="text-foreground font-serif text-xl">Create New Task</DialogTitle>
+          <DialogDescription className="text-muted-foreground">
             Add a new task to your list
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4 mt-4">
+        <div className="space-y-5 mt-4">
           {/* Title */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300">
-              Title <span className="text-red-400">*</span>
+            <label className="text-sm font-medium text-foreground">
+              Title <span className="text-destructive">*</span>
             </label>
             <Input
               value={formData.title || ""}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="bg-slate-800 border-slate-700 text-white"
+              className="bg-card border-border text-foreground"
               placeholder="What needs to be done?"
               autoFocus
             />
@@ -155,11 +156,11 @@ export function TaskCreateDialog({
 
           {/* Description */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300">Description</label>
+            <label className="text-sm font-medium text-foreground">Description</label>
             <Textarea
               value={formData.description || ""}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="min-h-[80px] bg-slate-800 border-slate-700 text-white"
+              className="min-h-[80px] bg-card border-border text-foreground"
               placeholder="Add more details..."
             />
           </div>
@@ -167,30 +168,30 @@ export function TaskCreateDialog({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Priority */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">Priority</label>
+              <label className="text-sm font-medium text-foreground">Priority</label>
               <Select
                 value={String(formData.priority || 3)}
                 onValueChange={(value) => setFormData({ ...formData, priority: Number(value) })}
               >
-                <SelectTrigger className="bg-slate-800 border-slate-700 text-white">
+                <SelectTrigger className="bg-card border-border text-foreground">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-slate-800 border-slate-700">
-                  <SelectItem value="1" className="text-slate-300">Urgent</SelectItem>
-                  <SelectItem value="2" className="text-slate-300">High</SelectItem>
-                  <SelectItem value="3" className="text-slate-300">Medium</SelectItem>
-                  <SelectItem value="4" className="text-slate-300">Low</SelectItem>
+                <SelectContent className="bg-card border-border">
+                  <SelectItem value="1" className="text-foreground">Urgent</SelectItem>
+                  <SelectItem value="2" className="text-foreground">High</SelectItem>
+                  <SelectItem value="3" className="text-foreground">Medium</SelectItem>
+                  <SelectItem value="4" className="text-foreground">Low</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             {/* Category */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">Category</label>
+              <label className="text-sm font-medium text-foreground">Category</label>
               <Input
                 value={formData.category || ""}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="bg-slate-800 border-slate-700 text-white"
+                className="bg-card border-border text-foreground"
                 placeholder="e.g., work, personal"
               />
             </div>
@@ -199,7 +200,7 @@ export function TaskCreateDialog({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Estimated Time */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">
+              <label className="text-sm font-medium text-foreground">
                 Estimated Time (minutes)
               </label>
               <Input
@@ -211,7 +212,7 @@ export function TaskCreateDialog({
                     estimated_minutes: e.target.value ? Number(e.target.value) : undefined,
                   })
                 }
-                className="bg-slate-800 border-slate-700 text-white"
+                className="bg-card border-border text-foreground"
                 placeholder="30"
                 min="1"
               />
@@ -219,20 +220,20 @@ export function TaskCreateDialog({
 
             {/* Energy Level */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">Energy Level</label>
+              <label className="text-sm font-medium text-foreground">Energy Level</label>
               <Select
                 value={formData.energy_level || ""}
                 onValueChange={(value) =>
                   setFormData({ ...formData, energy_level: value as Task["energy_level"] })
                 }
               >
-                <SelectTrigger className="bg-slate-800 border-slate-700 text-white">
+                <SelectTrigger className="bg-card border-border text-foreground">
                   <SelectValue placeholder="Select energy level" />
                 </SelectTrigger>
-                <SelectContent className="bg-slate-800 border-slate-700">
-                  <SelectItem value="low" className="text-slate-300">Low</SelectItem>
-                  <SelectItem value="medium" className="text-slate-300">Medium</SelectItem>
-                  <SelectItem value="high" className="text-slate-300">High</SelectItem>
+                <SelectContent className="bg-card border-border">
+                  <SelectItem value="low" className="text-foreground">Low</SelectItem>
+                  <SelectItem value="medium" className="text-foreground">Medium</SelectItem>
+                  <SelectItem value="high" className="text-foreground">High</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -241,45 +242,46 @@ export function TaskCreateDialog({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Due Date */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">Due Date</label>
+              <label className="text-sm font-medium text-foreground">Due Date</label>
               <Input
                 type="date"
                 value={formData.due_date || ""}
                 onChange={(e) =>
                   setFormData({ ...formData, due_date: e.target.value || undefined })
                 }
-                className="bg-slate-800 border-slate-700 text-white"
+                className="bg-card border-border text-foreground"
               />
             </div>
 
             {/* Scheduled Date */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">Scheduled For</label>
+              <label className="text-sm font-medium text-foreground">Scheduled For</label>
               <Input
                 type="date"
                 value={formData.scheduled_date || ""}
                 onChange={(e) =>
                   setFormData({ ...formData, scheduled_date: e.target.value || undefined })
                 }
-                className="bg-slate-800 border-slate-700 text-white"
+                className="bg-card border-border text-foreground"
               />
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-3 pt-4">
+          <div className="flex gap-3 pt-4 border-t border-border">
             <Button
               onClick={handleCreate}
               disabled={isCreating || !formData.title?.trim()}
-              className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white"
+              className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
             >
+              <Plus className="h-4 w-4 mr-2" strokeWidth={2} />
               {isCreating ? "Creating..." : "Create Task"}
             </Button>
             <Button
               onClick={handleCancel}
               disabled={isCreating}
               variant="outline"
-              className="flex-1 bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700"
+              className="flex-1 bg-card border-border text-foreground hover:bg-muted"
             >
               Cancel
             </Button>

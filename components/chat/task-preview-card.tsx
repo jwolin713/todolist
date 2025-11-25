@@ -3,7 +3,7 @@
 import { ParsedTask } from "@/lib/ai/task-parser"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, Clock, Zap, Tag, AlertCircle } from "lucide-react"
+import { Calendar, Clock, Zap, Tag, AlertCircle, CheckCircle2 } from "lucide-react"
 import { format } from "date-fns"
 
 interface TaskPreviewCardProps {
@@ -12,27 +12,32 @@ interface TaskPreviewCardProps {
 
 export function TaskPreviewCard({ task }: TaskPreviewCardProps) {
   const priorityConfig = {
-    1: { label: "Urgent", color: "bg-red-500/10 text-red-400 border-red-500/20" },
-    2: { label: "High", color: "bg-orange-500/10 text-orange-400 border-orange-500/20" },
-    3: { label: "Medium", color: "bg-blue-500/10 text-blue-400 border-blue-500/20" },
-    4: { label: "Low", color: "bg-slate-500/10 text-slate-400 border-slate-500/20" },
+    1: { label: "Urgent", color: "bg-destructive/10 text-destructive border-destructive/20" },
+    2: { label: "High", color: "bg-chart-1/10 text-chart-1 border-chart-1/20" },
+    3: { label: "Medium", color: "bg-chart-3/10 text-chart-3 border-chart-3/20" },
+    4: { label: "Low", color: "bg-muted text-muted-foreground border-border" },
   }
 
   const energyConfig = {
-    high: { label: "High Energy", icon: Zap, color: "text-yellow-400" },
-    medium: { label: "Medium Energy", icon: Zap, color: "text-blue-400" },
-    low: { label: "Low Energy", icon: Zap, color: "text-slate-400" },
+    high: { label: "High", icon: Zap, color: "text-chart-4" },
+    medium: { label: "Medium", icon: Zap, color: "text-chart-3" },
+    low: { label: "Low", icon: Zap, color: "text-muted-foreground" },
   }
 
   const priority = task.priority || 3
   const priorityInfo = priorityConfig[priority]
 
   return (
-    <Card className="p-3 bg-slate-900/50 border-slate-700 hover:bg-slate-900 transition-colors">
-      <div className="space-y-2">
+    <Card className="p-4 bg-card border-border hover:border-primary/20 transition-all duration-200 hover:shadow-soft">
+      <div className="space-y-3">
         {/* Title and Priority */}
-        <div className="flex items-start justify-between gap-2">
-          <h4 className="font-medium text-white text-sm flex-1">{task.title}</h4>
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-start gap-2.5">
+            <div className="w-5 h-5 rounded-full border-2 border-primary/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <CheckCircle2 className="h-3 w-3 text-primary/50" />
+            </div>
+            <h4 className="font-medium text-foreground text-sm leading-snug flex-1">{task.title}</h4>
+          </div>
           {task.priority && task.priority <= 2 && (
             <Badge className={priorityInfo.color} variant="outline">
               <AlertCircle className="h-3 w-3 mr-1" />
@@ -43,29 +48,31 @@ export function TaskPreviewCard({ task }: TaskPreviewCardProps) {
 
         {/* Description */}
         {task.description && (
-          <p className="text-xs text-slate-400 line-clamp-2">{task.description}</p>
+          <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed ml-7">
+            {task.description}
+          </p>
         )}
 
         {/* Metadata Badges */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 ml-7">
           {task.due_date && (
-            <Badge variant="outline" className="text-xs bg-slate-800 border-slate-700">
-              <Calendar className="h-3 w-3 mr-1" />
+            <Badge variant="outline" className="text-[11px] bg-secondary/50 border-secondary text-secondary-foreground">
+              <Calendar className="h-3 w-3 mr-1" strokeWidth={1.75} />
               Due: {format(new Date(task.due_date), "MMM d")}
               {task.due_time && ` at ${task.due_time}`}
             </Badge>
           )}
 
           {task.scheduled_date && (
-            <Badge variant="outline" className="text-xs bg-slate-800 border-slate-700">
-              <Calendar className="h-3 w-3 mr-1" />
+            <Badge variant="outline" className="text-[11px] bg-secondary/50 border-secondary text-secondary-foreground">
+              <Calendar className="h-3 w-3 mr-1" strokeWidth={1.75} />
               Scheduled: {format(new Date(task.scheduled_date), "MMM d")}
             </Badge>
           )}
 
           {task.estimated_minutes && (
-            <Badge variant="outline" className="text-xs bg-slate-800 border-slate-700">
-              <Clock className="h-3 w-3 mr-1" />
+            <Badge variant="outline" className="text-[11px] bg-secondary/50 border-secondary text-secondary-foreground">
+              <Clock className="h-3 w-3 mr-1" strokeWidth={1.75} />
               {task.estimated_minutes >= 60
                 ? `${Math.floor(task.estimated_minutes / 60)}h ${task.estimated_minutes % 60}m`
                 : `${task.estimated_minutes}m`}
@@ -73,12 +80,12 @@ export function TaskPreviewCard({ task }: TaskPreviewCardProps) {
           )}
 
           {task.energy_level && (
-            <Badge variant="outline" className="text-xs bg-slate-800 border-slate-700">
+            <Badge variant="outline" className="text-[11px] bg-secondary/50 border-secondary text-secondary-foreground">
               {(() => {
                 const EnergyIcon = energyConfig[task.energy_level].icon
                 return (
                   <>
-                    <EnergyIcon className={`h-3 w-3 mr-1 ${energyConfig[task.energy_level].color}`} />
+                    <EnergyIcon className={`h-3 w-3 mr-1 ${energyConfig[task.energy_level].color}`} strokeWidth={1.75} />
                     {energyConfig[task.energy_level].label}
                   </>
                 )
@@ -87,8 +94,8 @@ export function TaskPreviewCard({ task }: TaskPreviewCardProps) {
           )}
 
           {task.category && (
-            <Badge variant="outline" className="text-xs bg-slate-800 border-slate-700">
-              <Tag className="h-3 w-3 mr-1" />
+            <Badge variant="outline" className="text-[11px] bg-secondary/50 border-secondary text-secondary-foreground">
+              <Tag className="h-3 w-3 mr-1" strokeWidth={1.75} />
               {task.category}
             </Badge>
           )}

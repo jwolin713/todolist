@@ -9,19 +9,19 @@ interface PriorityBadgeProps {
 const priorityConfig = {
   1: {
     label: "Urgent",
-    color: "bg-red-500/10 text-red-400 border-red-500/20",
+    className: "bg-destructive/10 text-destructive border-destructive/20 hover:bg-destructive/15",
   },
   2: {
     label: "High",
-    color: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+    className: "bg-chart-1/10 text-chart-1 border-chart-1/20 hover:bg-chart-1/15",
   },
   3: {
     label: "Medium",
-    color: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    className: "bg-chart-3/10 text-chart-3 border-chart-3/20 hover:bg-chart-3/15",
   },
   4: {
     label: "Low",
-    color: "bg-slate-500/10 text-slate-400 border-slate-500/20",
+    className: "bg-muted text-muted-foreground border-border hover:bg-muted/80",
   },
 }
 
@@ -31,7 +31,11 @@ export function PriorityBadge({ priority, className }: PriorityBadgeProps) {
   return (
     <Badge
       variant="outline"
-      className={cn("text-xs font-medium", config.color, className)}
+      className={cn(
+        "text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 transition-colors",
+        config.className,
+        className
+      )}
     >
       {config.label}
     </Badge>

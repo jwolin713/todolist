@@ -49,8 +49,8 @@ export function ChatInput({
   }, [message])
 
   return (
-    <div className="border-t border-slate-800 bg-slate-900/80 backdrop-blur-sm p-4">
-      <div className="flex gap-2 items-end">
+    <div className="p-4">
+      <div className="flex gap-3 items-end">
         <Textarea
           ref={textareaRef}
           value={message}
@@ -58,24 +58,24 @@ export function ChatInput({
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           disabled={disabled}
-          className="min-h-[44px] max-h-[200px] resize-none bg-slate-800 border-slate-700 text-white placeholder:text-slate-500 focus-visible:ring-indigo-500"
+          className="min-h-[48px] max-h-[200px] resize-none bg-background border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-primary/20 rounded-xl"
           rows={1}
         />
         <Button
           onClick={handleSend}
           disabled={disabled || !message.trim()}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 h-[44px] flex-shrink-0"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 h-12 flex-shrink-0 rounded-xl transition-all duration-200 disabled:opacity-40"
         >
           {disabled ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
-            <Send className="h-4 w-4" />
+            <Send className="h-4 w-4" strokeWidth={1.75} />
           )}
         </Button>
       </div>
-      <p className="text-xs text-slate-500 mt-2">
-        Press <kbd className="px-1 py-0.5 bg-slate-800 rounded">Enter</kbd> to send,{" "}
-        <kbd className="px-1 py-0.5 bg-slate-800 rounded">Shift + Enter</kbd> for new line
+      <p className="text-[11px] text-muted-foreground mt-2.5">
+        Press <kbd className="px-1.5 py-0.5 bg-muted rounded-md font-medium text-foreground">Enter</kbd> to send,{" "}
+        <kbd className="px-1.5 py-0.5 bg-muted rounded-md font-medium text-foreground">Shift + Enter</kbd> for new line
       </p>
     </div>
   )

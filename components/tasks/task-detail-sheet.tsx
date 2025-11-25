@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Calendar, Trash2, X, ListTodo } from "lucide-react"
+import { Calendar, Trash2, X, ListTodo, Pencil } from "lucide-react"
 import { format } from "date-fns"
 import { useSubtasks } from "@/hooks/use-subtasks"
 import { SubtaskList } from "./subtask-list"
@@ -118,10 +118,10 @@ export function TaskDetailSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-lg bg-slate-900 border-slate-800 overflow-y-auto">
-        <SheetHeader>
-          <SheetTitle className="text-white">Task Details</SheetTitle>
-          <SheetDescription className="text-slate-400">
+      <SheetContent className="w-full sm:max-w-lg bg-background border-border overflow-y-auto">
+        <SheetHeader className="pb-4 border-b border-border">
+          <SheetTitle className="text-foreground font-serif text-xl">Task Details</SheetTitle>
+          <SheetDescription className="text-muted-foreground">
             View and edit task information
           </SheetDescription>
         </SheetHeader>
@@ -130,17 +130,17 @@ export function TaskDetailSheet({
           {/* Title */}
           {isEditing ? (
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">Title</label>
+              <label className="text-sm font-medium text-foreground">Title</label>
               <Input
                 value={formData.title || ""}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                className="bg-slate-800 border-slate-700 text-white"
+                className="bg-card border-border text-foreground"
                 placeholder="Task title"
               />
             </div>
           ) : (
             <div>
-              <h2 className="text-xl font-semibold text-white">{task.title}</h2>
+              <h2 className="text-xl font-serif font-medium text-foreground">{task.title}</h2>
             </div>
           )}
 
@@ -148,17 +148,17 @@ export function TaskDetailSheet({
           <div className="flex flex-wrap gap-2">
             <PriorityBadge priority={task.priority} />
             {task.category && (
-              <Badge variant="outline" className="bg-slate-800 border-slate-700 text-slate-300">
+              <Badge variant="outline" className="bg-secondary/50 border-secondary text-secondary-foreground">
                 {task.category}
               </Badge>
             )}
             {task.energy_level && (
-              <Badge variant="outline" className="bg-slate-800 border-slate-700 text-slate-300">
+              <Badge variant="outline" className="bg-secondary/50 border-secondary text-secondary-foreground capitalize">
                 {task.energy_level} energy
               </Badge>
             )}
             {isCompleted && (
-              <Badge className="bg-green-500/10 text-green-400 border-green-500/20">
+              <Badge className="bg-chart-2/10 text-chart-2 border-chart-2/20">
                 Completed
               </Badge>
             )}
@@ -167,32 +167,32 @@ export function TaskDetailSheet({
           {/* Description */}
           {isEditing ? (
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">Description</label>
+              <label className="text-sm font-medium text-foreground">Description</label>
               <Textarea
                 value={formData.description || ""}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className="min-h-[100px] bg-slate-800 border-slate-700 text-white"
+                className="min-h-[100px] bg-card border-border text-foreground"
                 placeholder="Add a description..."
               />
             </div>
           ) : (
             task.description && (
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300">Description</label>
-                <p className="text-slate-400 whitespace-pre-wrap">{task.description}</p>
+                <label className="text-sm font-medium text-muted-foreground">Description</label>
+                <p className="text-foreground whitespace-pre-wrap leading-relaxed">{task.description}</p>
               </div>
             )
           )}
 
           {/* Subtasks */}
           {!isEditing && !task.parent_task_id && (
-            <div className="space-y-3">
+            <div className="space-y-3 bg-muted/30 rounded-xl p-4">
               <div className="flex items-center gap-2">
-                <ListTodo className="h-4 w-4 text-slate-400" />
-                <label className="text-sm font-medium text-slate-300">
+                <ListTodo className="h-4 w-4 text-muted-foreground" strokeWidth={1.75} />
+                <label className="text-sm font-medium text-foreground">
                   Subtasks
                   {subtasks.length > 0 && (
-                    <span className="ml-2 text-slate-500">
+                    <span className="ml-2 text-muted-foreground font-normal">
                       {progress}% complete
                     </span>
                   )}
@@ -211,19 +211,19 @@ export function TaskDetailSheet({
           {/* Priority */}
           {isEditing && (
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">Priority</label>
+              <label className="text-sm font-medium text-foreground">Priority</label>
               <Select
                 value={String(formData.priority || task.priority)}
                 onValueChange={(value) => setFormData({ ...formData, priority: Number(value) })}
               >
-                <SelectTrigger className="bg-slate-800 border-slate-700 text-white">
+                <SelectTrigger className="bg-card border-border text-foreground">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-slate-800 border-slate-700">
-                  <SelectItem value="1" className="text-slate-300">Urgent</SelectItem>
-                  <SelectItem value="2" className="text-slate-300">High</SelectItem>
-                  <SelectItem value="3" className="text-slate-300">Medium</SelectItem>
-                  <SelectItem value="4" className="text-slate-300">Low</SelectItem>
+                <SelectContent className="bg-card border-border">
+                  <SelectItem value="1" className="text-foreground">Urgent</SelectItem>
+                  <SelectItem value="2" className="text-foreground">High</SelectItem>
+                  <SelectItem value="3" className="text-foreground">Medium</SelectItem>
+                  <SelectItem value="4" className="text-foreground">Low</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -232,11 +232,11 @@ export function TaskDetailSheet({
           {/* Category */}
           {isEditing && (
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">Category</label>
+              <label className="text-sm font-medium text-foreground">Category</label>
               <Input
                 value={formData.category || ""}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="bg-slate-800 border-slate-700 text-white"
+                className="bg-card border-border text-foreground"
                 placeholder="e.g., work, personal, health"
               />
             </div>
@@ -245,20 +245,20 @@ export function TaskDetailSheet({
           {/* Estimated Time */}
           {isEditing ? (
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">Estimated Time (minutes)</label>
+              <label className="text-sm font-medium text-foreground">Estimated Time (minutes)</label>
               <Input
                 type="number"
                 value={formData.estimated_minutes || ""}
                 onChange={(e) => setFormData({ ...formData, estimated_minutes: Number(e.target.value) || undefined })}
-                className="bg-slate-800 border-slate-700 text-white"
+                className="bg-card border-border text-foreground"
                 placeholder="30"
               />
             </div>
           ) : (
             task.estimated_minutes && (
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300">Estimated Time</label>
-                <p className="text-slate-400">{task.estimated_minutes} minutes</p>
+                <label className="text-sm font-medium text-muted-foreground">Estimated Time</label>
+                <p className="text-foreground">{task.estimated_minutes} minutes</p>
               </div>
             )
           )}
@@ -266,20 +266,20 @@ export function TaskDetailSheet({
           {/* Due Date */}
           {isEditing ? (
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">Due Date</label>
+              <label className="text-sm font-medium text-foreground">Due Date</label>
               <Input
                 type="date"
                 value={formData.due_date || ""}
                 onChange={(e) => setFormData({ ...formData, due_date: e.target.value || undefined })}
-                className="bg-slate-800 border-slate-700 text-white"
+                className="bg-card border-border text-foreground"
               />
             </div>
           ) : (
             task.due_date && (
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300">Due Date</label>
-                <div className="flex items-center gap-2 text-slate-400">
-                  <Calendar className="h-4 w-4" />
+                <label className="text-sm font-medium text-muted-foreground">Due Date</label>
+                <div className="flex items-center gap-2 text-foreground">
+                  <Calendar className="h-4 w-4 text-muted-foreground" strokeWidth={1.75} />
                   <span>{format(new Date(task.due_date), "PPP")}</span>
                 </div>
               </div>
@@ -289,12 +289,12 @@ export function TaskDetailSheet({
           {/* Scheduled Date */}
           {isEditing && (
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">Scheduled For</label>
+              <label className="text-sm font-medium text-foreground">Scheduled For</label>
               <Input
                 type="date"
                 value={formData.scheduled_date || ""}
                 onChange={(e) => setFormData({ ...formData, scheduled_date: e.target.value || undefined })}
-                className="bg-slate-800 border-slate-700 text-white"
+                className="bg-card border-border text-foreground"
               />
             </div>
           )}
@@ -302,18 +302,18 @@ export function TaskDetailSheet({
           {/* Energy Level */}
           {isEditing && (
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">Energy Level</label>
+              <label className="text-sm font-medium text-foreground">Energy Level</label>
               <Select
                 value={formData.energy_level || ""}
                 onValueChange={(value) => setFormData({ ...formData, energy_level: value as Task["energy_level"] })}
               >
-                <SelectTrigger className="bg-slate-800 border-slate-700 text-white">
+                <SelectTrigger className="bg-card border-border text-foreground">
                   <SelectValue placeholder="Select energy level" />
                 </SelectTrigger>
-                <SelectContent className="bg-slate-800 border-slate-700">
-                  <SelectItem value="low" className="text-slate-300">Low</SelectItem>
-                  <SelectItem value="medium" className="text-slate-300">Medium</SelectItem>
-                  <SelectItem value="high" className="text-slate-300">High</SelectItem>
+                <SelectContent className="bg-card border-border">
+                  <SelectItem value="low" className="text-foreground">Low</SelectItem>
+                  <SelectItem value="medium" className="text-foreground">Medium</SelectItem>
+                  <SelectItem value="high" className="text-foreground">High</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -321,17 +321,17 @@ export function TaskDetailSheet({
 
           {/* Metadata */}
           {!isEditing && (
-            <div className="space-y-3 pt-4 border-t border-slate-800">
+            <div className="space-y-3 pt-4 border-t border-border">
               <div>
-                <label className="text-sm font-medium text-slate-300">Created</label>
-                <p className="text-sm text-slate-400">
+                <label className="text-sm font-medium text-muted-foreground">Created</label>
+                <p className="text-sm text-foreground">
                   {format(new Date(task.created_at), "PPp")}
                 </p>
               </div>
               {task.completed_at && (
                 <div>
-                  <label className="text-sm font-medium text-slate-300">Completed</label>
-                  <p className="text-sm text-slate-400">
+                  <label className="text-sm font-medium text-muted-foreground">Completed</label>
+                  <p className="text-sm text-foreground">
                     {format(new Date(task.completed_at), "PPp")}
                   </p>
                 </div>
@@ -340,19 +340,19 @@ export function TaskDetailSheet({
           )}
 
           {/* Action Buttons */}
-          <div className="flex gap-2 pt-4">
+          <div className="flex gap-3 pt-4">
             {isEditing ? (
               <>
                 <Button
                   onClick={handleSave}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white"
+                  className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
                 >
                   Save Changes
                 </Button>
                 <Button
                   onClick={handleCancel}
                   variant="outline"
-                  className="flex-1 bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700"
+                  className="flex-1 bg-card border-border text-foreground hover:bg-muted"
                 >
                   Cancel
                 </Button>
@@ -361,15 +361,16 @@ export function TaskDetailSheet({
               <>
                 <Button
                   onClick={handleEdit}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white"
+                  className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
                 >
+                  <Pencil className="h-4 w-4 mr-2" strokeWidth={1.75} />
                   Edit Task
                 </Button>
                 <Button
                   onClick={handleDelete}
                   disabled={isDeleting}
                   variant="outline"
-                  className="border-red-500/20 text-red-400 hover:bg-red-500/10"
+                  className="border-destructive/20 text-destructive hover:bg-destructive/10"
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>

@@ -1,22 +1,29 @@
 import { Header } from "@/components/layout/header"
+import { CheckCircle2 } from "lucide-react"
 
 export default function CompletedPage() {
   return (
     <>
       <Header title="Completed" />
-      <div className="p-6">
+      <div className="p-4 sm:p-6 lg:p-8">
         <div className="max-w-4xl mx-auto">
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-white mb-2">Completed</h2>
-            <p className="text-slate-400">
+          <div className="mb-8">
+            <h2 className="text-3xl font-serif font-medium text-foreground tracking-tight mb-2">Completed</h2>
+            <p className="text-muted-foreground">
               View all your completed tasks
             </p>
           </div>
 
-          {/* Placeholder for task list */}
-          <div className="bg-slate-900 rounded-lg p-8 text-center border border-slate-800">
-            <p className="text-slate-400">
-              No completed tasks yet. Complete some tasks to see them here.
+          {/* Empty state */}
+          <div className="bg-card rounded-2xl border border-border p-12 text-center">
+            <div className="w-16 h-16 rounded-2xl bg-chart-2/10 flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 className="h-8 w-8 text-chart-2" strokeWidth={1.5} />
+            </div>
+            <h3 className="text-xl font-serif font-medium text-foreground mb-2">
+              No completed tasks yet
+            </h3>
+            <p className="text-muted-foreground max-w-sm mx-auto">
+              Complete some tasks to see them here. Your accomplishments will be tracked and celebrated.
             </p>
           </div>
         </div>

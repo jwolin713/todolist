@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import { ArrowUpDown, Calendar, Clock, Flag } from "lucide-react"
+import { ArrowUpDown, Calendar, Clock, Flag, ListFilter } from "lucide-react"
 
 interface TaskListProps {
   tasks: Task[]
@@ -75,8 +75,8 @@ export function TaskList({
 
   if (tasks.length === 0) {
     return (
-      <div className="bg-slate-900 rounded-lg p-8 text-center border border-slate-800">
-        <p className="text-slate-400">{emptyMessage}</p>
+      <div className="bg-card rounded-xl p-8 text-center border border-border">
+        <p className="text-muted-foreground">{emptyMessage}</p>
       </div>
     )
   }
@@ -85,7 +85,7 @@ export function TaskList({
     <div className="space-y-4">
       {/* Sort dropdown */}
       <div className="flex items-center justify-between">
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-muted-foreground">
           {tasks.length} {tasks.length === 1 ? "task" : "tasks"}
         </p>
 
@@ -94,15 +94,15 @@ export function TaskList({
             <Button
               variant="outline"
               size="sm"
-              className="bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+              className="bg-card border-border text-foreground hover:bg-muted h-8 gap-2"
             >
-              <ArrowUpDown className="h-4 w-4 mr-2" />
-              Sort by: {currentSortOption?.label}
+              <ListFilter className="h-3.5 w-3.5" strokeWidth={1.75} />
+              <span className="text-xs">{currentSortOption?.label}</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="end"
-            className="bg-slate-800 border-slate-700"
+            className="bg-card border-border shadow-soft-lg"
           >
             {sortOptions.map((option) => {
               const Icon = option.icon
@@ -110,11 +110,11 @@ export function TaskList({
                 <DropdownMenuItem
                   key={option.value}
                   onClick={() => setSortBy(option.value)}
-                  className={`text-slate-300 focus:bg-slate-700 focus:text-white ${
-                    sortBy === option.value ? "bg-slate-700 text-white" : ""
+                  className={`text-foreground focus:bg-accent focus:text-accent-foreground cursor-pointer ${
+                    sortBy === option.value ? "bg-accent text-accent-foreground" : ""
                   }`}
                 >
-                  <Icon className="h-4 w-4 mr-2" />
+                  <Icon className="h-4 w-4 mr-2 text-muted-foreground" strokeWidth={1.75} />
                   {option.label}
                 </DropdownMenuItem>
               )
@@ -124,7 +124,7 @@ export function TaskList({
       </div>
 
       {/* Task list */}
-      <div className="space-y-2">
+      <div className="space-y-3">
         {sortedTasks.map((task) => (
           <TaskItem
             key={task.id}

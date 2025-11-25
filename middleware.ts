@@ -30,7 +30,8 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   // Redirect to login if accessing protected route without auth
-  if (!user && !request.nextUrl.pathname.startsWith('/login')) {
+  // Allow /auth routes to process without auth (needed for magic link callback)
+  if (!user && !request.nextUrl.pathname.startsWith('/login') && !request.nextUrl.pathname.startsWith('/auth')) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)

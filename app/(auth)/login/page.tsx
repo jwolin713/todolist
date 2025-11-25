@@ -29,6 +29,10 @@ export default function LoginPage() {
         ? configuredUrl
         : window.location.origin
 
+      console.log('Magic link redirect URL:', redirectUrl)
+      console.log('Current hostname:', window.location.hostname)
+      console.log('Configured URL:', configuredUrl)
+
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {

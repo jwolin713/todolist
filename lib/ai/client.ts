@@ -8,4 +8,4 @@ export const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 })
 
-export const AI_MODEL = "claude-sonnet-4-5-20250929"
+export const AI_MODEL = "claude-3-5-haiku-20241022"

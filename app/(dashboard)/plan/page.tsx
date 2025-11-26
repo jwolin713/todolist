@@ -4,14 +4,13 @@ import { useState } from "react"
 import { Header } from "@/components/layout/header"
 import { SmartSuggestions } from "@/components/tasks/smart-suggestions"
 import { TaskDetailSheet } from "@/components/tasks/task-detail-sheet"
-import { CreateTaskButton } from "@/components/tasks/create-task-button"
 import { ChatButton } from "@/components/chat/chat-button"
 import { useRealtimeTasks } from "@/hooks/use-realtime-tasks"
 import { useChat } from "@/hooks/use-chat"
 import { Task } from "@/lib/types/database"
 
 export default function PlanPage() {
-  const { tasks, loading, createTask, updateTask, deleteTask, toggleTaskComplete } = useRealtimeTasks()
+  const { tasks, loading, updateTask, deleteTask, toggleTaskComplete } = useRealtimeTasks()
   const { messages, isLoading: chatLoading, sendMessage } = useChat()
 
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
@@ -46,15 +45,6 @@ export default function PlanPage() {
     }
   }
 
-  const handleCreateTask = async (taskData: Omit<Task, "id" | "user_id" | "created_at" | "updated_at">) => {
-    try {
-      await createTask(taskData)
-    } catch (error) {
-      console.error("Failed to create task:", error)
-      throw error
-    }
-  }
-
   return (
     <>
       <Header title="Plan" />
@@ -83,9 +73,6 @@ export default function PlanPage() {
           )}
         </div>
       </div>
-
-      {/* Create Task Button */}
-      <CreateTaskButton onCreate={handleCreateTask} />
 
       {/* AI Chat Button */}
       <ChatButton

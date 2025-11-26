@@ -18,8 +18,8 @@ export function useTodayTasks(tasks: Task[]) {
     const todayStr = today.toISOString().split("T")[0] // YYYY-MM-DD format
 
     return tasks.filter((task) => {
-      // Skip completed and archived tasks
-      if (task.status === "completed" || task.status === "archived") {
+      // Skip archived tasks (but keep completed tasks visible)
+      if (task.status === "archived") {
         return false
       }
 

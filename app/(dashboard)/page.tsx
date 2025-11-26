@@ -4,7 +4,6 @@ import { useState } from "react"
 import { Header } from "@/components/layout/header"
 import { TodayView } from "@/components/tasks/today-view"
 import { TaskDetailSheet } from "@/components/tasks/task-detail-sheet"
-import { CreateTaskButton } from "@/components/tasks/create-task-button"
 import { ChatButton } from "@/components/chat/chat-button"
 import { useRealtimeTasks } from "@/hooks/use-realtime-tasks"
 import { useTodayTasks } from "@/hooks/use-today-tasks"
@@ -12,7 +11,7 @@ import { useChat } from "@/hooks/use-chat"
 import { Task } from "@/lib/types/database"
 
 export default function TodayPage() {
-  const { tasks, loading, createTask, updateTask, deleteTask, toggleTaskComplete } = useRealtimeTasks()
+  const { tasks, loading, updateTask, deleteTask, toggleTaskComplete } = useRealtimeTasks()
   const {
     overdueTasks,
     scheduledTasks,
@@ -54,15 +53,6 @@ export default function TodayPage() {
       await deleteTask(taskId)
     } catch (error) {
       console.error("Failed to delete task:", error)
-    }
-  }
-
-  const handleCreateTask = async (taskData: Omit<Task, "id" | "user_id" | "created_at" | "updated_at">) => {
-    try {
-      await createTask(taskData)
-    } catch (error) {
-      console.error("Failed to create task:", error)
-      throw error
     }
   }
 
@@ -113,9 +103,6 @@ export default function TodayPage() {
           )}
         </div>
       </div>
-
-      {/* Create Task Button */}
-      <CreateTaskButton onCreate={handleCreateTask} />
 
       {/* AI Chat Button */}
       <ChatButton

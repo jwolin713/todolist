@@ -4,7 +4,6 @@ import { useState } from "react"
 import { Header } from "@/components/layout/header"
 import { TaskList } from "@/components/tasks/task-list"
 import { TaskDetailSheet } from "@/components/tasks/task-detail-sheet"
-import { CreateTaskButton } from "@/components/tasks/create-task-button"
 import { ChatButton } from "@/components/chat/chat-button"
 import { useRealtimeTasks } from "@/hooks/use-realtime-tasks"
 import { useChat } from "@/hooks/use-chat"
@@ -12,7 +11,7 @@ import { Task } from "@/lib/types/database"
 import { Inbox } from "lucide-react"
 
 export default function InboxPage() {
-  const { tasks, loading, createTask, updateTask, deleteTask, toggleTaskComplete } = useRealtimeTasks()
+  const { tasks, loading, updateTask, deleteTask, toggleTaskComplete } = useRealtimeTasks()
   const { messages, isLoading: chatLoading, sendMessage } = useChat()
 
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
@@ -47,15 +46,6 @@ export default function InboxPage() {
       await deleteTask(taskId)
     } catch (error) {
       console.error("Failed to delete task:", error)
-    }
-  }
-
-  const handleCreateTask = async (taskData: Omit<Task, "id" | "user_id" | "created_at" | "updated_at">) => {
-    try {
-      await createTask(taskData)
-    } catch (error) {
-      console.error("Failed to create task:", error)
-      throw error
     }
   }
 
@@ -94,7 +84,7 @@ export default function InboxPage() {
                 Your inbox is empty
               </h3>
               <p className="text-muted-foreground max-w-sm mx-auto">
-                No active tasks. Use the AI assistant to add some tasks, or tap the + button to create one manually.
+                No active tasks. Use the AI assistant to add some tasks.
               </p>
             </div>
           ) : (
@@ -107,9 +97,6 @@ export default function InboxPage() {
           )}
         </div>
       </div>
-
-      {/* Create Task Button */}
-      <CreateTaskButton onCreate={handleCreateTask} />
 
       {/* AI Chat Button */}
       <ChatButton

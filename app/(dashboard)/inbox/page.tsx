@@ -11,14 +11,14 @@ import { Task } from "@/lib/types/database"
 import { Inbox } from "lucide-react"
 
 export default function InboxPage() {
-  const { tasks, loading, updateTask, deleteTask, toggleTaskComplete } = useRealtimeTasks()
+  const { tasks, loading, updateTask, deleteTask, toggleTaskComplete, archiveTask } = useRealtimeTasks()
   const { messages, isLoading: chatLoading, sendMessage } = useChat()
 
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [detailSheetOpen, setDetailSheetOpen] = useState(false)
 
-  // Filter for non-completed tasks
-  const activeTasks = tasks.filter((task) => task.status !== "completed")
+  // Filter for non-archived tasks (shows both pending and completed)
+  const activeTasks = tasks.filter((task) => task.status !== "archived")
 
   const handleTaskClick = (task: Task) => {
     setSelectedTask(task)
@@ -46,6 +46,14 @@ export default function InboxPage() {
       await deleteTask(taskId)
     } catch (error) {
       console.error("Failed to delete task:", error)
+    }
+  }
+
+  const handleArchiveTask = async (taskId: string) => {
+    try {
+      await archiveTask(taskId)
+    } catch (error) {
+      console.error("Failed to archive task:", error)
     }
   }
 
@@ -92,6 +100,7 @@ export default function InboxPage() {
               tasks={activeTasks}
               onToggleComplete={handleToggleComplete}
               onDelete={handleDeleteTask}
+              onArchive={handleArchiveTask}
               onTaskClick={handleTaskClick}
               emptyMessage="No tasks yet. Add some tasks to get started!"
             />

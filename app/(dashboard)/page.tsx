@@ -11,7 +11,7 @@ import { useChat } from "@/hooks/use-chat"
 import { Task } from "@/lib/types/database"
 
 export default function TodayPage() {
-  const { tasks, loading, updateTask, deleteTask, toggleTaskComplete } = useRealtimeTasks()
+  const { tasks, loading, updateTask, deleteTask, toggleTaskComplete, archiveTask } = useRealtimeTasks()
   const {
     overdueTasks,
     scheduledTasks,
@@ -53,6 +53,14 @@ export default function TodayPage() {
       await deleteTask(taskId)
     } catch (error) {
       console.error("Failed to delete task:", error)
+    }
+  }
+
+  const handleArchiveTask = async (taskId: string) => {
+    try {
+      await archiveTask(taskId)
+    } catch (error) {
+      console.error("Failed to archive task:", error)
     }
   }
 
@@ -99,6 +107,7 @@ export default function TodayPage() {
               taskScores={taskScores}
               onToggleComplete={handleToggleComplete}
               onDelete={handleDeleteTask}
+              onArchive={handleArchiveTask}
               onTaskClick={handleTaskClick}
             />
           )}

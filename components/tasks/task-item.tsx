@@ -150,7 +150,7 @@ export function TaskItem({ task, onToggleComplete, onDelete, onArchive, onClick 
             variant="ghost"
             size="icon"
             onClick={handleArchive}
-            className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-primary hover:bg-primary/10"
+            className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10"
             title="Archive task"
           >
             <Archive className="h-4 w-4" />

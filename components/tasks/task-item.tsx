@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import { PriorityBadge } from "./priority-badge"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, Clock, Zap, ChevronRight, Trash2 } from "lucide-react"
+import { Calendar, Clock, Zap, ChevronRight, Trash2, Archive } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { formatDistanceToNow } from "date-fns"
 
@@ -13,16 +13,25 @@ interface TaskItemProps {
   task: Task
   onToggleComplete?: (taskId: string) => void
   onDelete?: (taskId: string) => void
+  onArchive?: (taskId: string) => void
   onClick?: () => void
 }
 
-export function TaskItem({ task, onToggleComplete, onDelete, onClick }: TaskItemProps) {
+export function TaskItem({ task, onToggleComplete, onDelete, onArchive, onClick }: TaskItemProps) {
   const isCompleted = task.status === "completed"
+  const isArchived = task.status === "archived"
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation()
     if (onDelete && window.confirm("Delete this task?")) {
       onDelete(task.id)
+    }
+  }
+
+  const handleArchive = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (onArchive) {
+      onArchive(task.id)
     }
   }
 
@@ -50,7 +59,7 @@ export function TaskItem({ task, onToggleComplete, onDelete, onClick }: TaskItem
       className={cn(
         "group flex items-start gap-4 p-4 rounded-xl transition-all duration-200",
         "bg-card border border-border hover:border-primary/20 hover:shadow-soft",
-        isCompleted && "opacity-60",
+        (isCompleted || isArchived) && "opacity-60",
         onClick && "cursor-pointer"
       )}
       onClick={onClick}
@@ -75,7 +84,7 @@ export function TaskItem({ task, onToggleComplete, onDelete, onClick }: TaskItem
         <h3
           className={cn(
             "text-[15px] font-medium text-foreground leading-snug",
-            isCompleted && "line-through text-muted-foreground"
+            (isCompleted || isArchived) && "line-through text-muted-foreground"
           )}
         >
           {task.title}
@@ -134,8 +143,19 @@ export function TaskItem({ task, onToggleComplete, onDelete, onClick }: TaskItem
         </div>
       </div>
 
-      {/* Delete button and arrow indicator on hover */}
+      {/* Action buttons and arrow indicator on hover */}
       <div className="flex-shrink-0 flex items-center gap-1 self-center">
+        {onArchive && isCompleted && !isArchived && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleArchive}
+            className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-primary hover:bg-primary/10"
+            title="Archive task"
+          >
+            <Archive className="h-4 w-4" />
+          </Button>
+        )}
         {onDelete && (
           <Button
             variant="ghost"

@@ -233,6 +233,20 @@ export function useRealtimeTasks() {
     [tasks, updateTask]
   )
 
+  const archiveTask = useCallback(
+    async (taskId: string) => {
+      try {
+        await updateTask(taskId, { status: "archived" })
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Failed to archive task"
+        setError(errorMessage)
+        console.error("Error archiving task:", err)
+        throw new Error(errorMessage)
+      }
+    },
+    [updateTask]
+  )
+
   return {
     tasks,
     loading,
@@ -242,5 +256,6 @@ export function useRealtimeTasks() {
     updateTask,
     deleteTask,
     toggleTaskComplete,
+    archiveTask,
   }
 }

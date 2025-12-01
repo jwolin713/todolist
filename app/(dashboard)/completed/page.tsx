@@ -9,13 +9,13 @@ import { Task } from "@/lib/types/database"
 import { CheckCircle2 } from "lucide-react"
 
 export default function CompletedPage() {
-  const { tasks, loading, updateTask, deleteTask, toggleTaskComplete } = useRealtimeTasks()
+  const { tasks, loading, updateTask, deleteTask, toggleTaskComplete, archiveTask } = useRealtimeTasks()
 
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [detailSheetOpen, setDetailSheetOpen] = useState(false)
 
-  // Filter for completed tasks only
-  const completedTasks = tasks.filter((task) => task.status === "completed")
+  // Filter for completed and archived tasks
+  const completedTasks = tasks.filter((task) => task.status === "completed" || task.status === "archived")
 
   const handleTaskClick = (task: Task) => {
     setSelectedTask(task)
@@ -43,6 +43,14 @@ export default function CompletedPage() {
       await deleteTask(taskId)
     } catch (error) {
       console.error("Failed to delete task:", error)
+    }
+  }
+
+  const handleArchiveTask = async (taskId: string) => {
+    try {
+      await archiveTask(taskId)
+    } catch (error) {
+      console.error("Failed to archive task:", error)
     }
   }
 
@@ -89,6 +97,7 @@ export default function CompletedPage() {
               tasks={completedTasks}
               onToggleComplete={handleToggleComplete}
               onDelete={handleDeleteTask}
+              onArchive={handleArchiveTask}
               onTaskClick={handleTaskClick}
               emptyMessage="No completed tasks yet"
             />

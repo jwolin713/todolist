@@ -16,6 +16,7 @@ interface TaskListProps {
   tasks: Task[]
   onToggleComplete?: (taskId: string) => void
   onDelete?: (taskId: string) => void
+  onArchive?: (taskId: string) => void
   onTaskClick?: (task: Task) => void
   emptyMessage?: string
 }
@@ -33,6 +34,7 @@ export function TaskList({
   tasks,
   onToggleComplete,
   onDelete,
+  onArchive,
   onTaskClick,
   emptyMessage = "No tasks to display",
 }: TaskListProps) {
@@ -133,6 +135,7 @@ export function TaskList({
             task={task}
             onToggleComplete={onToggleComplete}
             onDelete={onDelete}
+            onArchive={onArchive}
             onClick={onTaskClick ? () => onTaskClick(task) : undefined}
           />
         ))}

@@ -88,6 +88,7 @@ export default function CompletedPage() {
             <TaskList
               tasks={completedTasks}
               onToggleComplete={handleToggleComplete}
+              onDelete={handleDeleteTask}
               onTaskClick={handleTaskClick}
               emptyMessage="No completed tasks yet"
             />

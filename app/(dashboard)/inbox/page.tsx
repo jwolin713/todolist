@@ -91,6 +91,7 @@ export default function InboxPage() {
             <TaskList
               tasks={activeTasks}
               onToggleComplete={handleToggleComplete}
+              onDelete={handleDeleteTask}
               onTaskClick={handleTaskClick}
               emptyMessage="No tasks yet. Add some tasks to get started!"
             />

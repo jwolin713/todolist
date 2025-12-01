@@ -13,6 +13,7 @@ interface TodayViewProps {
   recommendedTasks?: Task[]
   taskScores?: Map<string, number>
   onToggleComplete?: (taskId: string) => void
+  onDelete?: (taskId: string) => void
   onTaskClick?: (task: Task) => void
 }
 
@@ -79,6 +80,7 @@ export function TodayView({
   recommendedTasks = [],
   taskScores,
   onToggleComplete,
+  onDelete,
   onTaskClick,
 }: TodayViewProps) {
   const hasAnyTasks =
@@ -116,6 +118,7 @@ export function TodayView({
           <TaskList
             tasks={overdueTasks}
             onToggleComplete={onToggleComplete}
+            onDelete={onDelete}
             onTaskClick={onTaskClick}
             emptyMessage=""
           />
@@ -133,6 +136,7 @@ export function TodayView({
           <TaskList
             tasks={scheduledTasks}
             onToggleComplete={onToggleComplete}
+            onDelete={onDelete}
             onTaskClick={onTaskClick}
             emptyMessage=""
           />
@@ -150,6 +154,7 @@ export function TodayView({
           <TaskList
             tasks={dueTodayTasks}
             onToggleComplete={onToggleComplete}
+            onDelete={onDelete}
             onTaskClick={onTaskClick}
             emptyMessage=""
           />
@@ -167,6 +172,7 @@ export function TodayView({
           <TaskList
             tasks={highPriorityTasks}
             onToggleComplete={onToggleComplete}
+            onDelete={onDelete}
             onTaskClick={onTaskClick}
             emptyMessage=""
           />
@@ -187,6 +193,7 @@ export function TodayView({
           <TaskList
             tasks={recommendedTasks}
             onToggleComplete={onToggleComplete}
+            onDelete={onDelete}
             onTaskClick={onTaskClick}
             emptyMessage=""
           />

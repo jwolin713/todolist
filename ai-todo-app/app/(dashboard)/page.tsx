@@ -98,6 +98,7 @@ export default function TodayPage() {
               recommendedTasks={recommendedTasks}
               taskScores={taskScores}
               onToggleComplete={handleToggleComplete}
+              onDelete={handleDeleteTask}
               onTaskClick={handleTaskClick}
             />
           )}

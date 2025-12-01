@@ -118,15 +118,15 @@ export function TaskDetailSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-lg bg-background border-border overflow-y-auto">
-        <SheetHeader className="pb-4 border-b border-border">
+      <SheetContent className="w-full sm:max-w-lg bg-background border-border overflow-y-auto px-6">
+        <SheetHeader className="pb-5 pt-6 border-b border-border -mx-6 px-6">
           <SheetTitle className="text-foreground font-serif text-xl">Task Details</SheetTitle>
           <SheetDescription className="text-muted-foreground">
             View and edit task information
           </SheetDescription>
         </SheetHeader>
 
-        <div className="mt-6 space-y-6">
+        <div className="mt-6 space-y-6 pb-6">
           {/* Title */}
           {isEditing ? (
             <div className="space-y-2">
@@ -277,11 +277,11 @@ export function TaskDetailSheet({
           ) : (
             task.due_date && (
               <div className="space-y-2">
-                <label className="text-sm font-medium text-muted-foreground">Due Date</label>
-                <div className="flex items-center gap-2 text-foreground">
+                <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-muted-foreground" strokeWidth={1.75} />
-                  <span>{format(new Date(task.due_date), "PPP")}</span>
+                  <label className="text-sm font-medium text-muted-foreground">Due Date</label>
                 </div>
+                <p className="text-foreground pl-6">{format(new Date(task.due_date), "PPP")}</p>
               </div>
             )
           )}
@@ -321,16 +321,16 @@ export function TaskDetailSheet({
 
           {/* Metadata */}
           {!isEditing && (
-            <div className="space-y-3 pt-4 border-t border-border">
-              <div>
-                <label className="text-sm font-medium text-muted-foreground">Created</label>
+            <div className="space-y-4 pt-5 border-t border-border">
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-muted-foreground block">Created</label>
                 <p className="text-sm text-foreground">
                   {format(new Date(task.created_at), "PPp")}
                 </p>
               </div>
               {task.completed_at && (
-                <div>
-                  <label className="text-sm font-medium text-muted-foreground">Completed</label>
+                <div className="space-y-1">
+                  <label className="text-sm font-medium text-muted-foreground block">Completed</label>
                   <p className="text-sm text-foreground">
                     {format(new Date(task.completed_at), "PPp")}
                   </p>

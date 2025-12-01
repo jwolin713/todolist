@@ -15,6 +15,7 @@ import { ArrowUpDown, Calendar, Clock, Flag, ListFilter } from "lucide-react"
 interface TaskListProps {
   tasks: Task[]
   onToggleComplete?: (taskId: string) => void
+  onDelete?: (taskId: string) => void
   onTaskClick?: (task: Task) => void
   emptyMessage?: string
 }
@@ -31,6 +32,7 @@ const sortOptions = [
 export function TaskList({
   tasks,
   onToggleComplete,
+  onDelete,
   onTaskClick,
   emptyMessage = "No tasks to display",
 }: TaskListProps) {
@@ -130,6 +132,7 @@ export function TaskList({
             key={task.id}
             task={task}
             onToggleComplete={onToggleComplete}
+            onDelete={onDelete}
             onClick={onTaskClick ? () => onTaskClick(task) : undefined}
           />
         ))}

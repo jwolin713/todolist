@@ -2,20 +2,29 @@
 
 import { Task } from "@/lib/types/database"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/components/ui/button"
 import { PriorityBadge } from "./priority-badge"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, Clock, Zap, ChevronRight } from "lucide-react"
+import { Calendar, Clock, Zap, ChevronRight, Trash2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { formatDistanceToNow } from "date-fns"
 
 interface TaskItemProps {
   task: Task
   onToggleComplete?: (taskId: string) => void
+  onDelete?: (taskId: string) => void
   onClick?: () => void
 }
 
-export function TaskItem({ task, onToggleComplete, onClick }: TaskItemProps) {
+export function TaskItem({ task, onToggleComplete, onDelete, onClick }: TaskItemProps) {
   const isCompleted = task.status === "completed"
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (onDelete && window.confirm("Delete this task?")) {
+      onDelete(task.id)
+    }
+  }
 
   const handleCheckboxChange = (checked: boolean) => {
     if (onToggleComplete) {
@@ -125,12 +134,24 @@ export function TaskItem({ task, onToggleComplete, onClick }: TaskItemProps) {
         </div>
       </div>
 
-      {/* Arrow indicator on hover */}
-      {onClick && (
-        <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity self-center">
-          <ChevronRight className="h-4 w-4 text-muted-foreground" />
-        </div>
-      )}
+      {/* Delete button and arrow indicator on hover */}
+      <div className="flex-shrink-0 flex items-center gap-1 self-center">
+        {onDelete && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleDelete}
+            className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        )}
+        {onClick && (
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+          </div>
+        )}
+      </div>
     </div>
   )
 }
